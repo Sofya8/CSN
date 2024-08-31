@@ -1,0 +1,8 @@
+library("sva")
+source("adjustDatasets.R")
+adjustDatasets("1human_pre_norm.txt", "1mouse_pre_norm.txt")
+adjustDatasets("2human_pre_norm.txt", "2mouse_pre_norm.txt")
+adjustDatasets("3human_pre_norm.txt", "3mouse_pre_norm.txt")
+adjustDatasets("4human_pre_norm.txt", "4mouse_pre_norm.txt")
+adjustDatasets("human1_pre_norm.txt", "human2_pre_norm.txt")
+adjustDatasets("mouse1_pre_norm.txt", "mouse2_pre_norm.txt")
