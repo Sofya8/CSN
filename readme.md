@@ -8,11 +8,6 @@ This project focuses on cross-study normalization methods for analyzing gene exp
 3. [CSN Normalization](#csn-normalization)
 4. [Other Normalization Methods](#other-normalization-methods)
 5. [Estimation Method](#estimation-method)
-6. [Requirements](#requirements)
-7. [Installation](#installation)
-8. [Usage](#usage)
-9. [Contributing](#contributing)
-10. [License](#license)
 
 ## Data Preprocessing
 
