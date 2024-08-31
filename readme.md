@@ -2,6 +2,7 @@
 
 This repository contains the implementation for reproducing the results of our paper:
 "Comparison and Development of Cross-Study Normalization Methods for Inter-Species Transcriptional Analysis".
+
 This project focuses on cross-study normalization methods for analyzing gene expression datasets from different species. We evaluate three existing normalization techniques—Empirical Bayes, Distance Weighted Discrimination, and Cross-Platform Normalization—on RNA-sequencing data. Additionally, we propose a novel normalization method designed to reduce experimental differences while preserving biologically significant variations. Our results demonstrate that our method offers improved conservation of biological differences compared to existing approaches, facilitating more accurate inter-species analysis.
 
 ## Table of Contents
