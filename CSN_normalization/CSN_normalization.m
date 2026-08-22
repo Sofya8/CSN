@@ -68,7 +68,3 @@ function CSN_normalization(clusters_number, condition_field_name_in_series_matri
     writetable(fstExptable, strcat('output/',output1_filename));
     writetable(secExptable, strcat('output/',output2_filename));
 end
-function cellArray = readcell(path)
-    T = readtable(path);
-    cellArray = table2cell(T);
-end
