@@ -56,6 +56,6 @@ function values_to_minimize = loss_func(x_vec, human_table, mouse_table, data_hu
     IOU_human = intersection_over_union(list_of_tables{1}, human_origin_DEGS);
     IOU_mouse = intersection_over_union(list_of_tables{2}, mouse_origin_DEGS);
     
-     values_to_minimize = 1000 * (max((human_min_iou - IOU_human),0) + max((mouse_min_iou - IOU_mouse),0)) - CSC_index - IOU_human - IOU_mouse;
+    values_to_minimize = 1000 * (max((human_min_iou - IOU_human),0)^2 + max((mouse_min_iou - IOU_mouse),0)^2) - CSC_index - IOU_human - IOU_mouse;
 
 end
