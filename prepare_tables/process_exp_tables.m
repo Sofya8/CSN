@@ -1,6 +1,8 @@
 fig = figure;
 addpath('../data/raw_exp_tables')
 addpath('../data/series')
+addpath('../data/raw_series')
+addpath('../data/pre_processed_exp_tables')
 processTableGSE60424()
 processTableGSE107011()
 processTableGSE122597()
@@ -13,12 +15,16 @@ function processTableGSE107011()
     expTablePath = 'GSE107011_Processed_data_TPM.txt';
     exptable = readtable(expTablePath);
     
-    exptable.Properties.VariableNames = strrep(exptable.Properties.VariableNames, '_sort_bam','');
-    
     genes = table2cell(exptable(:,1));
-     with_dot = contains(genes,'.');
-     genes(with_dot)= extractBefore(genes(with_dot),".");
-     exptable(:,1) = cell2table(genes);
+    with_dot = contains(genes,'.');
+    genes(with_dot)= extractBefore(genes(with_dot),".");
+    exptable(:,1) = cell2table(genes);
+    namesTablePath = 'GSE107011_names';
+    names_table = readtable(namesTablePath);
+
+    names_table.Sample_title = extractBefore(names_table.Sample_title, "_rep");
+    names_table.Sample_title = strrep(names_table.Sample_title, '9', 'x9');
+    exptable = rename_by_names_file(exptable, names_table);
     exptable.Properties.VariableNames(1) = {'tracking_id'};
     filtered_table = exptable(:,~contains(exptable.Properties.VariableNames,'Neutrophils'));
     normalized_exptable = exptable_to_log_normalized_scale(filtered_table);
@@ -44,52 +50,33 @@ end
 
 function processTableGSE60424()
     expTablePath = 'GSE60424_GEOSubmit_FC1to11_normalized_counts.txt';
-%     expTablePath = 'GSE60424_counts';
     exptable = readtable(expTablePath);
     
     
     genes = table2cell(exptable(:,1));
-     with_dot = contains(genes,'.');
-     genes(with_dot)= extractBefore(genes(with_dot),".");
-     exptable(:,1) = cell2table(genes);
-     
-%     namesTablePath = 'GSE60424_names';
-%     names_table = readtable(namesTablePath);
-%     names_table(:,{'name'}) = cell2table(strrep(table2cell(names_table(:,{'name'})), '-', '_')); 
-    
-    exptable.Properties.VariableNames = strrep(exptable.Properties.VariableNames, '_sort_bam','');
-%     rotated_exptable = rows2vars(exptable);
-%     temp_exptable = rotated_exptable;
-%     temp_exptable.Properties.VariableNames(1) = {'name'};
-%     gene_names = temp_exptable(1,:);
-%     temp_exptable(1,:) = [];
-%     temp_exptable = change_labels_of_genes(temp_exptable, names_table, 2, 4);
-%     temp_exptable = [gene_names ;temp_exptable];
-%     exptable = rows2vars(temp_exptable);
-%     exptable(:,1) = [];
-%     exptable.Properties.VariableNames = table2cell(exptable(1,:));
-%     exptable(1,:) = [];
-    
-%     old_names_in_exptable = exptable.Properties.VariableNames;
-%     old_names_in_exptable = strrep(old_names_in_exptable , '_sort_bam','');
-%     
-%     old_names_in_names_table = names_table(:,{'name'});
-%     new_names_in_names_table = names_table(:,{'Sample_title'});
-%     
-%     exptable.Properties.VariableNames = new_names;
+    with_dot = contains(genes,'.');
+    genes(with_dot)= extractBefore(genes(with_dot),".");
+    exptable(:,1) = cell2table(genes);
+
+    namesTablePath = 'GSE60424_names';
+    names_table = readtable(namesTablePath);
+    names_table.name = strrep(names_table.name, '-', '_'); 
+
+    exptable = rename_by_names_file(exptable, names_table); 
+    keep = [true, contains(exptable.Properties.VariableNames(2:end), 'Healthy_Control')];
+    exptable = exptable(:, keep);
+    exptable = exptable(:,~contains(exptable.Properties.VariableNames,'Neutrophils' )& ~contains(exptable.Properties.VariableNames, 'Whole'));
     exptable.Properties.VariableNames(1) = {'tracking_id'};
-    filtered_exptable = exptable(:,~contains(exptable.Properties.VariableNames,'Neutrophils'));
-    normalized_exptable = exptable_to_log_normalized_scale(filtered_exptable);
-    plot_box_plots(filtered_exptable, normalized_exptable, 1, '(GSE60424 - H1)')
+    normalized_exptable = exptable_to_log_normalized_scale(exptable);
+    plot_box_plots(exptable, normalized_exptable, 1, '(GSE60424 - H1)')
     writetable(normalized_exptable,'../data/pre_processed_exp_tables/ready_GSE60424');
 end
-%processTableGSE124829();
+
+
 function processTableGSE124829()
-    %seriestable = readcell('GSE124829_series_matrix_temp');
     filtered_seriestable = readcell('newGSE124829_series_matrix');
     expTablePath = 'GSE124829_Gene_count_table.csv';
     exptable = readtable(expTablePath);
-    %exptableNames = seriestable(2,:);
     geneID_name_table = readtable('mouse_geneID_name');
     sample_names = exptable.Properties.VariableNames;
     exptable_without_sample_names = table2cell(exptable);
@@ -97,7 +84,6 @@ function processTableGSE124829()
     exptable_without_sample_names = change_labels_of_genes(exptable_without_sample_names, geneID_name_table , 2, 1);
     exptable = cell2table(exptable_without_sample_names);
     exptable.Properties.VariableNames = sample_names;
-    %exptable.Properties.VariableNames = ['tracking_id', exptableNames(2:end)];
     exptable.Properties.VariableNames(1) = {'tracking_id'};
     filterd_exptableNames = filtered_seriestable(1,2:end);
     exptable = [exptable(:,1), exptable(:,filterd_exptableNames)];
@@ -123,10 +109,24 @@ function normCounts = normalize_read_counts_to_library_size(counts)
     normCounts = bsxfun(@rdivide,counts,sizeFactors);
 end
 
-function cellArray = readcell(path)
-    T = readtable(path);
-    cellArray = table2cell(T);
-end
+function exptable = rename_by_names_file(exptable, names_table)
+
+    % Get the expression-table sample columns (everything except genenames)
+    sampleCols = exptable.Properties.VariableNames(2:end);
+
+    % Match each exptable column to Sample_title
+    [tf, idx] = ismember(sampleCols, names_table.Sample_title);
+
+    % Keep only columns that were found in names_table
+    exptable = exptable(:, [true, tf]);
+
+    % Rename the matched columns using names_table.name
+    newNames = names_table.name(idx(tf));
+
+    exptable.Properties.VariableNames(2:end) = newNames;
+
+    
+end 
 
 function plot_box_plots(counts, normCounts, exp_num, exp_name)
     counts = table2array(counts(:,2:end));
