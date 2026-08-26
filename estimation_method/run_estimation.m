@@ -9,10 +9,10 @@ function run_estimation(exptable1_filename, series_matrix1_filename, dataset1_na
     FDR_threshold = 0.05; 
     logFC_threshold = 1;
     
-    fstExptable = readtable(strcat('data\', exptable1_filename));
-    fstSeriesTable = readcell(strcat('data\', series_matrix1_filename));
-    secExptable = readtable(strcat('data\', exptable2_filename));
-    secSeriesTable = readcell(strcat('data\', series_matrix2_filename));
+    fstExptable = readtable(strcat('data/', exptable1_filename));
+    fstSeriesTable = readcell(strcat('data/', series_matrix1_filename));
+    secExptable = readtable(strcat('data/', exptable2_filename));
+    secSeriesTable = readcell(strcat('data/', series_matrix2_filename));
     
     [HC1_table, HC1_size] = create_group(fstExptable, fstSeriesTable,...
      condition_field_name_in_series_matrix, first_condition);
@@ -52,11 +52,6 @@ function run_estimation(exptable1_filename, series_matrix1_filename, dataset1_na
     filter_and_illustrate_intersections_of_DEG(lists_filenames, gene_lists, intersects_figure_filename,...
         intersects_figure_title,intersects_precent_figure_filename, intersects_precent_figure_title,...
         title_ext, filenames_ext, dataset1_name_in_legend, dataset2_name_in_legend, log_FC_list);
-end
-
-function cellArray = readcell(path)
-    T = readtable(path);
-    cellArray = table2cell(T);
 end
 
 function [group_table, group_size] = create_group(exptable, seriesTable,...
