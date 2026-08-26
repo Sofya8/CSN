@@ -6,12 +6,9 @@ processSeriesTableGSE60424();
 processSeriesTableGSE124829()
 
 function processSeriesTableGSE107011()
-%% TODO: take care of read and write cell
-%% TODO: take care of real series matrix(without deleting first 20 lines by hand)
     filename = 'GSE107011_series_matrix';
-    myCell = readcell(filename);
+    myCell = readseries(filename);
     myCell(10,1) = {'!Sample_characteristics_name'};
-    %myCell = [myCell(:,1) filterByValue(myCell,myCell(:,1),'!Sample_characteristics_name','Naive')];
     myCell = unify_B_cells_names(myCell);
     myCell(1,:) = strrep(myCell(19,:), '9', 'x9');
     
@@ -29,7 +26,7 @@ end
 
 function processSeriesTableGSE122597()
     filename = 'GSE122597_series_matrix';
-    myCell = readcell(filename);
+    myCell = readseries(filename);
     myCell(20,1) = {'!Sample_characteristics_name'};
     myCell = unify_B_cells_names(myCell);
     myCell(1,:) = strrep(myCell(1,:), '.', '_');
@@ -39,17 +36,14 @@ end
 
 
 function processSeriesTableGSE124829()
-%% TODO: take care of read and write cell
-%% TODO: take care of real series matrix(without deleting first 20 lines by hand)
     filename = 'GSE124829_series_matrix';
    
     dataset_partition_table = readtable('GSE124829_partition.xlsx');
    % exptable = exptable(B_dataset_sample_names,:);
     
-    myCell = readcell(filename);
+    myCell = readseries(filename);
     myCell(22,1) = {'!Sample_characteristics_name'};
     B_dataset_entries = contains(dataset_partition_table.Dataset, 'B');
-   % B_dataset_sample_names = dataset_partition_table.x_Sample_geo_accession(B_dataset_entries);
     samples_only = myCell(:,2:end);
     samples_only = samples_only(:,B_dataset_entries);
     myCell =  [myCell(:,1) samples_only];
@@ -63,13 +57,11 @@ end
 
 
 function processSeriesTableGSE60424()
-%% TODO: take care of read and write cell
-%% TODO: take care of real series matrix(without deleting first 20 lines by hand)
     filename = 'GSE60424_series_matrix';
-    myCell = readcell(filename);
+    myCell = readseries(filename);
     myCell(12,1) = {'!Sample_characteristics_name'};
-     myCell(14,1) = {'!Sample_diseasestatus_ch1'};
-     myCell = [myCell(:,1) filterByValue(myCell,myCell(:,1),'!Sample_diseasestatus_ch1','diseasestatus: Healthy Control')];
+    myCell(14,1) = {'!Sample_diseasestatus_ch1'};
+    myCell = [myCell(:,1) filterByValue(myCell,myCell(:,1),'!Sample_diseasestatus_ch1','diseasestatus: Healthy Control')];
     myCell = unify_B_cells_names(myCell);
     
     namesTablePath = 'GSE60424_names';
@@ -85,9 +77,10 @@ function processSeriesTableGSE60424()
     writecellarray(myCell, '../data/series/newGSE60424_series_matrix');
 end
 
-function cellArray = readcell(path)
-    T = readtable(path, 'Delimiter', '\t');
-    cellArray = table2cell(T);
+function cellArray = readseries(path)
+    cellArray = readcell(path, 'Delimiter', '\t');
+    cellArray = cellfun(@(x) char(string(x(~ismissing(x)))), cellArray, 'UniformOutput', false);   
+    cellArray(any(cellfun(@(x) isempty(x) || (isnumeric(x) && any(isnan(x))), cellArray), 2), :) = [];
 end
 
 function writecellarray(cellarray, path)
@@ -97,6 +90,7 @@ function writecellarray(cellarray, path)
     table(end,:)=[];
     writetable(table, path);
 end
+
 function newCell = filterByValue(myCell,characteristics,var,value)
     myListOfValues = myCell(contains(characteristics,var),:); % extracts the values of the right characteristic
     newCell = myCell(:,contains(myListOfValues, value)); % filters the samples of the value 
