@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a39cfd60ef48c014bbc5b0a734c9ac1a14a5b3279c44dd85d6d87ed0e294b176
-size 3188
+Run	name	Sample_title	GSM	organism	cell_type	disease_status	gender
+SRR6298331	B_naive_rep1_F	9JD4_B_naive_rep1	GSM2859484	Homo sapiens	Naive B cells	healthy	F
+SRR6298302	B_naive_rep2_M	925L_B_naive_rep2	GSM2859455	Homo sapiens	Naive B cells	healthy	M
+SRR6298365	B_naive_rep3_F	G4YW_B_naive_rep3	GSM2859518	Homo sapiens	Naive B cells	healthy	F
+SRR6298273	B_naive_rep4_M	DZQV_B_naive_rep4	GSM2859426	Homo sapiens	Naive B cells	healthy	M
+SRR6298336	C_mono_rep1_F	9JD4_C_mono_rep1	GSM2859489	Homo sapiens	Classical monocytes	healthy	F
+SRR6298307	C_mono_rep2_M	925L_C_mono_rep2	GSM2859460	Homo sapiens	Classical monocytes	healthy	M
+SRR6298370	C_mono_rep3_F	G4YW_C_mono_rep3	GSM2859523	Homo sapiens	Classical monocytes	healthy	F
+SRR6298278	C_mono_rep4_M	DZQV_C_mono_rep4	GSM2859431	Homo sapiens	Classical monocytes	healthy	M
+SRR6298328	CD4_naive_rep1_F	9JD4_CD4_naive_rep1	GSM2859481	Homo sapiens	Naive CD4 T cells	healthy	F
+SRR6298299	CD4_naive_rep2_M	925L_CD4_naive_rep2	GSM2859452	Homo sapiens	Naive CD4 T cells	healthy	M
+SRR6298363	CD4_naive_rep3_F	G4YW_CD4_naive_rep3	GSM2859516	Homo sapiens	Naive CD4 T cells	healthy	F
+SRR6298271	CD4_naive_rep4_M	DZQV_CD4_naive_rep4	GSM2859424	Homo sapiens	Naive CD4 T cells	healthy	M
+SRR6298315	CD8_naive_rep1_F	9JD4_CD8_naive_rep1	GSM2859468	Homo sapiens	Naive CD8 T cells	healthy	F
+SRR6298286	CD8_naive_rep2_M	925L_CD8_naive_rep2	GSM2859439	Homo sapiens	Naive CD8 T cells	healthy	M
+SRR6298344	CD8_naive_rep3_F	G4YW_CD8_naive_rep3	GSM2859497	Homo sapiens	Naive CD8 T cells	healthy	F
+SRR6298258	CD8_naive_rep4_M	DZQV_CD8_naive_rep4	GSM2859411	Homo sapiens	Naive CD8 T cells	healthy	M
+SRR6298341	mDC_rep1_F	9JD4_mDC_rep1	GSM2859494	Homo sapiens	Myeloid dendritic cells	healthy	F
+SRR6298312	mDC_rep2_M	925L_mDC_rep2	GSM2859465	Homo sapiens	Myeloid dendritic cells	healthy	M
+SRR6298375	mDC_rep3_F	G4YW_mDC_rep3	GSM2859528	Homo sapiens	Myeloid dendritic cells	healthy	F
+SRR6298283	mDC_rep4_M	DZQV_mDC_rep4	GSM2859436	Homo sapiens	Myeloid dendritic cells	healthy	M
+SRR6298342	Neutrophils_rep1_F	9JD4_Neutrophils_rep1	GSM2859495	Homo sapiens	Low-density neutrophils	healthy	F
+SRR6298313	Neutrophils_rep2_M	925L_Neutrophils_rep2	GSM2859466	Homo sapiens	Low-density neutrophils	healthy	M
+SRR6298376	Neutrophils_rep3_F	G4YW_Neutrophils_rep3	GSM2859529	Homo sapiens	Low-density neutrophils	healthy	F
+SRR6298284	Neutrophils_rep4_M	DZQV_Neutrophils_rep4	GSM2859437	Homo sapiens	Low-density neutrophils	healthy	M
+SRR6298339	NK_rep1_F	9JD4_NK_rep1	GSM2859492	Homo sapiens	Natural killer cells	healthy	F
+SRR6298310	NK_rep2_M	925L_NK_rep2	GSM2859463	Homo sapiens	Natural killer cells	healthy	M
+SRR6298373	NK_rep3_F	G4YW_NK_rep3	GSM2859526	Homo sapiens	Natural killer cells	healthy	F
+SRR6298281	NK_rep4_M	DZQV_NK_rep4	GSM2859434	Homo sapiens	Natural killer cells	healthy	M
+SRR6298323	Treg_rep1_F	9JD4_Treg_rep1	GSM2859476	Homo sapiens	T regulatory cells	healthy	F
+SRR6298294	Treg_rep2_M	925L_Treg_rep2	GSM2859447	Homo sapiens	T regulatory cells	healthy	M
+SRR6298358	Treg_rep3_F	G4YW_Treg_rep3	GSM2859511	Homo sapiens	T regulatory cells	healthy	F
+SRR6298266	Treg_rep4_M	DZQV_Treg_rep4	GSM2859419	Homo sapiens	T regulatory cells	healthy	M
